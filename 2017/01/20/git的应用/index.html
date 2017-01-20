@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="记录了整个技术栈"><title>git的应用 | 董金娟的博客|学习前端</title><link rel="stylesheet" type="text/css" href="//fonts.css.network/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2.0"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=1.2.0"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">git的应用</h1><a id="logo" href="/.">董金娟的博客|学习前端</a><p class="description">技术博客</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">git的应用</h1><div class="post-meta">Jan 20, 2017<span> | </span><span class="category"><a href="/categories/git的应用/">git的应用</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><ol>
+<li>git是否安装成功：git –version</li>
+<li><p>git配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name &quot;github的用户名&quot;</div><div class="line">git config --global user.email &quot;github的邮箱&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>git的工作流</p>
+<ol>
+<li>先创建一个本地的git仓库</li>
+</ol>
+<ul>
+<li>创建一个文件夹</li>
+<li>把这个文件夹变成一个git可以管理的仓库，shift+右键 在此处打开命令窗口 -&gt; 输入<code>git init</code></li>
+</ul>
+<ol>
+<li>创建一个远程仓库：登录<a href="http://github.com" target="_blank" rel="external">github的官网</a>；右上角有个+（加号）来创建新的仓库。</li>
+<li>给本地仓库添加一个远程通道：</li>
+</ol>
+<ul>
+<li>添加远程通道通过<code>git remote add 通道名称（默认origin） 远程通道地址</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote add origin https://github.com/shangqingwu/test.git</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>查看链接了哪些远程通道<code>git remote -v</code></li>
+</ul>
+<ol>
+<li><p>把本地仓库的内容推送到远程仓库有3步：</p>
+<ol>
+<li><code>git add .;git add -A</code>(这里只是在暂存区)</li>
+<li><code>git commit -m&quot;这里是用来写注释的&quot;</code>（这里只是在历史区）</li>
+<li><code>git push origin master</code>（把我本地仓库的内容，推送到origin这个远程仓库的master分支上去）</li>
+</ol>
+</li>
+<li><p>如何更新老师的讲义：</p>
+<ol>
+<li>把老师发送到群里的github的远程地址，复制到github的地址栏，回车；</li>
+<li>到了老师的远程仓库后，点击fork</li>
+<li><p>fork之后就自动到了自己的远程仓库，通过下面的绿色克隆按钮（clone or download）复制地址，使用<code>git clone 地址</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/你自己的github的用户名/Javascript201616.git`</div></pre></td></tr></table></figure>
+<ul>
+<li>git clone自动的让本地仓库和自己的远程仓库，添加了联系；</li>
+<li>进入某个文件夹：<code>cd 文件夹的名称</code></li>
+<li>返回上一级文件夹：<code>cd ..</code></li>
+<li><code>ls</code>可以列出当前目录下的所有目录</li>
+</ul>
+</li>
+<li>当老师讲义更新的时候，学生如果想要更新自己的课件：<ol>
+<li>建立学生本地仓库跟老师远程仓库的联系：<code>git remote add teacher 老师的链接地址（https://github.com/zhufengpeixun/Javascript201616.git）</code></li>
+<li>远程更新：<code>git remote update teacher</code></li>
+<li>down到本地：<code>git pull teacher master</code></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>常用的命令：</li>
+</ol>
+<ul>
+<li>git是否安装成功：<code>git --version</code></li>
+<li>添加远程仓库：<code>git remote add 通道名称（origin:自己远程 xxxx:别人远程）</code></li>
+<li>查看本地连接了哪些远程：<code>git remote -v</code></li>
+<li>删除远程通道： <code>git remote rm 通道名称</code></li>
+<li>把远程仓库的内容更新到本地：<ol>
+<li><code>git remote add teacher 远程通道地址</code></li>
+<li><code>git remote update teacher</code></li>
+<li><code>git pull teacher master</code></li>
+</ol>
+</li>
+<li>把本地仓库内容推送到自己远程仓库<ol>
+<li><code>git add .</code></li>
+<li><code>git commit -m&quot;注释&quot;</code></li>
+<li><code>git push origin master</code></li>
+</ol>
+</li>
+<li>ls 查看当前文件夹下有哪些子文件；（有的电脑是dir）</li>
+<li><code>cd 文件夹名</code>:进入某个文件夹</li>
+<li>创建一个文件夹：<code>mkdir 文件夹名字</code></li>
+<li>创建多个文件：<code>touch app.js index.html</code></li>
+<li>进入文件夹并创建文件可以合并：<code>cd 文件夹名 &amp;&amp; touch app.js index.html;</code></li>
+<li>返回上一次 <code>cd ..</code></li>
+<li>返回根目录 <code>cd/</code></li>
+<li>git配置：<br><code>git config --global user.name &quot;github的用户名&quot;</code><br><code>git config --global user.email &quot;github的邮箱&quot;</code></li>
+<li>思考：删除文件夹的命令：<code>git rm 文件夹名 -r -f</code><pre><code>删除文件的命令：`git rm 文件名`
+</code></pre></li>
+</ul>
+</li>
+</ol>
+</div><div class="tags"><a href="/tags/git/">git</a></div><div class="post-nav"><a href="/2017/01/19/js笔记/" class="next">预解释、函数、内存、this</a></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="widget"><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="请输入关键字..."/></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git的应用/">git的应用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/搭建博客/">搭建博客</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/预解释/" style="font-size: 15px;">预解释</a> <a href="/tags/函数/" style="font-size: 15px;">函数</a> <a href="/tags/内存和内存释放/" style="font-size: 15px;">内存和内存释放</a> <a href="/tags/this/" style="font-size: 15px;">this</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-fei"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/01/20/git的应用/">git的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/js笔记/">预解释、函数、内存、this</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/用hexo搭建一个博客/">用hexo搭建博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/hello-world/">Hello World</a></li></ul></div></div></div></div><a id="totop" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.2.0" async></script><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |<a href="/atom.xml">订阅本站</a> |<span>联系博主：<a href="mailto:null" target="_blank" class="fa fa-email"> </a><a href="null" target="_blank" class="fa fa-weibo"></a><a href="null" target="_blank" class="fa fa-github"> </a></span></p><p><span> Copyright &copy;<a href="/." rel="nofollow">董金娟</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span><span><a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> Theme </a>by<a rel="nofollow" target="_blank" href="https://github.com/chaooo"> Charles.</a></span></p></div></div></div><script type="text/javascript" src="/js/search.json.js?v=1.2.0"></script></body></html>
