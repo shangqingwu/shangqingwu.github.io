@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="记录了整个技术栈"><title>面向对象 | 董金娟的博客|学习前端</title><link rel="stylesheet" type="text/css" href="//fonts.css.network/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2.0"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=1.2.0"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">面向对象</h1><a id="logo" href="/.">董金娟的博客|学习前端</a><p class="description">技术博客</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">面向对象</h1><div class="post-meta">Mar 23, 2017<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h3 id="1-3-2-面向对象"><a href="#1-3-2-面向对象" class="headerlink" title="1.3.2 面向对象"></a>1.3.2 面向对象</h3><h4 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h4><blockquote>
+<ol>
+<li>对象是一个抽象的概念，类似于我们的自然界。自然界中分为了人类、动物类、植物类…，而我们每一个人都是人类中的一个实例；</li>
+</ol>
+<ul>
+<li>对象：js中<code>万物皆对象</code>，它是一个泛指 ;</li>
+<li>类：<code>对对象的具体细分</code>;</li>
+<li>实例：<code>某一个类别</code>中<code>具体的一个事物</code>;</li>
+</ul>
+<ol>
+<li>基于<code>类</code>和<code>实例</code>来研究js就是面向对象。</li>
+<li>内置类：</li>
+</ol>
+<ul>
+<li>数据类型类：<code>Number</code>、<code>String</code>、<code>Boolean</code>、<code>Object</code>、<code>Array</code>、<code>RegExp</code>、<code>Date</code>、<code>Function...</code></li>
+<li><code>HTMLCollection</code>(元素集合类)：通过getElementsByTagName等获取的元素集合都是他的一个实例；</li>
+<li><code>NodeList</code>(节点集合类)：通过getElementsByName等获取的节点集合都是他的一个实例；</li>
+<li><code>HTMLDivElement</code>：（每一个html标签都有一个自己对应的类）-&gt; <code>HTMLElement</code>、<code>Element</code>、<code>Node</code>、<code>EventTarget...</code></li>
+</ul>
+<ol>
+<li>实例：-&gt; <code>对象数据类型</code>；</li>
+</ol>
+<ul>
+<li>每一个数组都是Array这个类的一个实例；</li>
+<li><p>每一个<code>函数</code>都是<code>Function</code>这个类的一个<code>实例</code>；（无论是<code>实名</code>还是<code>匿名</code>、<code>自执行函数</code>）；</p>
+<pre><code>  var ary = new Array();
+console.log(typeof ary);//&quot;object&quot; -&gt; 实例ary是一个对象
+</code></pre></li>
+</ul>
+</blockquote>
+<h5 id="1-单例模式（也叫命名空间、nameSpan）"><a href="#1-单例模式（也叫命名空间、nameSpan）" class="headerlink" title="1. 单例模式（也叫命名空间、nameSpan）"></a>1. 单例模式（也叫命名空间、nameSpan）</h5><blockquote>
+<ol>
+<li>本质：其实就是一个<code>对象</code>；</li>
+<li>目的：解决<code>命名冲突</code>的问题，<code>模块化方法</code>代码管理；</li>
+<li>使用程度：常用；</li>
+<li>调用方式：<ul>
+<li>单例模式下，在对象花括号外面用<code>对象名.属性名();</code>调用；</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>单例模式下，每个属性和属性之间的调用使用<code>this.其他属性名();</code>就可以了；</p>
+<blockquote>
+<ul>
+<li>例如：在person1.fn中调用fn2 -&gt; 就直接在fn1的函数中写this.fn2即可；</li>
+</ul>
+</blockquote>
+<pre><code>var person1={
+     fn1:function () {
+         console.log(this);//fn1里面的this是person1 -&gt; 因为是用person1.fn1()调用的，点前面是person1；
+         this.fn2(); //  this是person1 -&gt; person1.fn2()
+     },
+     fn2:function () { }
+};
+     person1.fn1();//this是person1
+     // var f=person1.fn1;   //让fn1中的this变成window
+     // f();//this -&gt; window
+</code></pre></li>
+</ul>
+</blockquote>
+<h5 id="2-构造函数模式（类）"><a href="#2-构造函数模式（类）" class="headerlink" title="2. 构造函数模式（类）"></a>2. 构造函数模式（类）</h5><blockquote>
+<ol>
+<li>目的：为了<code>创建</code>一个<code>自定义类</code>，并且<code>创建这个类的实例</code>；</li>
+<li><p><code>instanceof</code> ：专门判断一个<code>实例是否属于某一个类</code>；-&gt; 返回布尔值<code>true/false</code>；</p>
+<pre><code>  console.log([] instanceof Array);//true
+console.log((function () {}) instanceof Function);//true
+console.log(Array instanceof Function);//true   说明Array这个类也是一个函数,是Function类的一个实例；
+console.log(Function instanceof Object);//true   说明Function这个类也是Object类的一个实例；
+</code></pre></li>
+<li><p>任何一个<code>引用数据类型</code>都是<code>Object</code>这个类的一个<code>实例</code>；</p>
+</li>
+<li>定义一个类：<code>function 类名(){}</code>  -&gt; 跟定义函数相同；</li>
+</ol>
+<ul>
+<li>构造一个类，尽量使用<code>首字母大写</code>；</li>
+<li><code>构造函数中的this</code>就是<code>当前实例</code> -&gt; 如果想在实例上添加私有属性 -&gt; this.属性名</li>
+<li>构造函数会<code>默认返回</code>一个<code>实例this</code>，但是不能在函数中再写一个return一个引用数据类型；</li>
+</ul>
+<ol>
+<li>函数三种角色：</li>
+</ol>
+<ul>
+<li><code>普通函数</code> </li>
+<li><code>构造函数（类）</code></li>
+<li><code>Function</code>这个类的一个<code>实例</code>（<code>对象</code>）</li>
+</ul>
+</blockquote>
+<pre><code>function Person(name,age) {  //首字母大写-&gt;构造函数
+    //1.系统会自动创建一个对象：this
+    //2.添加属性和方法
+    this.name=name;  //this是外面接收的实例person1
+    this.age=age;
+    this.getName=function () {
+        alert(&quot;我的名字是&quot;+this.name);
+    };
+    //3.系统默认帮我们返回一个对象this   //构造函数中的this是实例；（因为构造函数中默认返回的this被外面的实例接收了）
+}
+var person1=new Person(&quot;kim&quot;,18);
+var person2=new Person(&quot;lee&quot;,19);
+person1.getName(); //我的名字是kim
+person2.getName(); //我的名字是lee
+console.log(person1.getName===person2.getName);//false   说明getName是person1和person2中私有的，开辟了两个空间地址，person1和person2只能调用自己空间中的getName。
+</code></pre></div><div class="tags"></div><div class="post-nav"><a href="/2017/01/20/综合练习题/" class="next">综合练习题</a></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="widget"><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="请输入关键字..."/></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git的应用/">git的应用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/搭建博客/">搭建博客</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/预解释/" style="font-size: 15px;">预解释</a> <a href="/tags/函数/" style="font-size: 15px;">函数</a> <a href="/tags/内存和内存释放/" style="font-size: 15px;">内存和内存释放</a> <a href="/tags/this/" style="font-size: 15px;">this</a> <a href="/tags/git/" style="font-size: 15px;">git</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-fei"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/面向对象/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/20/综合练习题/">综合练习题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/20/git的应用/">git的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/预解释、函数、内存、this/">预解释、函数、内存、this</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/用hexo搭建一个博客/">用hexo搭建博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/hello-world/">Hello World</a></li></ul></div></div></div></div><a id="totop" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.2.0" async></script><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |<a href="/atom.xml">订阅本站</a> |<span>联系博主：<a href="mailto:null" target="_blank" class="fa fa-email"> </a><a href="null" target="_blank" class="fa fa-weibo"></a><a href="null" target="_blank" class="fa fa-github"> </a></span></p><p><span> Copyright &copy;<a href="/." rel="nofollow">董金娟</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span><span><a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> Theme </a>by<a rel="nofollow" target="_blank" href="https://github.com/chaooo"> Charles.</a></span></p></div></div></div><script type="text/javascript" src="/js/search.json.js?v=1.2.0"></script></body></html>
