@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="记录了整个技术栈"><title>null和undefined的区别 | 董金娟的博客|学习前端</title><link rel="stylesheet" type="text/css" href="//fonts.css.network/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2.0"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=1.2.0"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">null和undefined的区别</h1><a id="logo" href="/.">董金娟的博客|学习前端</a><p class="description">技术博客</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">null和undefined的区别</h1><div class="post-meta">Mar 23, 2017<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h3 id="null和undefined的区别"><a href="#null和undefined的区别" class="headerlink" title="null和undefined的区别"></a>null和undefined的区别</h3><blockquote>
+<ul>
+<li>null和undefined都代表没有，但是null是属性存在但是值不存在，undefined是连这个属性都不存在；</li>
+</ul>
+<ol>
+<li><code>null</code>：空对象指针，没有具体的值，一般都是我们手动设置初始的值为null，后期的话会给其赋值；-&gt; <code>现在没有，以后可能会有</code>；</li>
+<li><code>undefined</code>：未定义，连东西都没有，一般是浏览器默认的值；-&gt; <code>自始至终都不会有</code>；</li>
+</ol>
+<ul>
+<li><code>document.parentNode -&gt; null</code> 浏览器天生自带的一个属性：<code>父亲节点</code>的属性，返回<code>null</code>，因为一个页面中的<code>document已经是最顶级元素了</code>，他没有父亲；</li>
+<li><code>document.parentnode -&gt; undefined</code>  document<code>没有parentnode属性</code>，返回undefined；</li>
+</ul>
+</blockquote>
+<h4 id="null"><a href="#null" class="headerlink" title="null"></a>null</h4><blockquote>
+<ol>
+<li><p>我们<code>设定</code>一个<code>变量</code>，<code>后期需要使用</code>，那么前期我们设置默认值为null；</p>
+<pre><code>var total=null;
+function sum(num1,num2){
+    total=num1+num2;
+    return total;
+}
+var res=sum(1,2); 
+console.log(res); //3
+</code></pre></li>
+<li><p>在JS内存释放中，我们想<code>释放一个堆内存</code>，就让其<code>值变为null</code>即可；</p>
+<pre><code>  var obj={name:&quot;kim&quot;,age:18};
+obj=null;
+</code></pre></li>
+<li><p>我们通过<code>DOM中</code>提供的属性和方法获取页面中的某一个元素标签，如果<code>当前这个标签不存在</code>，获取的结果是<code>null</code>，而不是undefined；</p>
+<pre><code>document.getElementById(&quot;div1&quot;);  /*null  -&gt; 如果页面中没有id名为div1的元素，那么就返回null*/
+</code></pre></li>
+<li><p>在用<code>正则的exec方法</code>和<code>字符串的match方法</code>进行捕获时，如果当前要捕获的字符串和正则不匹配（<code>字符串中没有所需要的内容</code>）时，捕获到的结果为<code>null</code>；</p>
+<pre><code>  var reg=/\d+/g;
+var str=&quot;kimSyu&quot;;
+reg.exec(str); //null
+str.match(reg); //null
+</code></pre></li>
+</ol>
+</blockquote>
+<h4 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h4><blockquote>
+<ol>
+<li><p>在JS预解释的时候，<code>只声明未定义</code>，默认返回undefined；</p>
+<pre><code>  console.log(num); //null
+var num=13;
+</code></pre></li>
+<li><p>在一个<code>函数中</code>，如果<code>没有写return</code>，或者<code>return后面没有写东西</code>，默认返回undefined；</p>
+<pre><code> function fn(){
+}
+var res=fn();
+console.log(res);  //undefined
+</code></pre></li>
+<li><p>函数中<code>设置了形参</code>，但是执行的时候<code>没有往里面传实参</code>，默认返回undefined；</p>
+<pre><code> function fn(a,b){
+   console.log(a);  //10
+   console.log(b);  //undefined   
+}
+fn(10);
+</code></pre></li>
+<li><p>获取一个<code>对象的</code>属性名对应的属性值，如果当前的这个<code>属性名不存在</code>，属性值默认返回<code>undefined</code>；<br><strong>-&gt; <code>可以应用这个道理来检测当前浏览器是否兼容某一个方法!!!</code></strong></p>
+<pre><code>  var obj={};
+console.log(obj.name); //undefined    
+</code></pre></li>
+</ol>
+</blockquote>
+<h4 id="检测当前浏览器是否兼容getComputedStyle-方法"><a href="#检测当前浏览器是否兼容getComputedStyle-方法" class="headerlink" title="检测当前浏览器是否兼容getComputedStyle 方法"></a>检测当前浏览器是否兼容getComputedStyle 方法</h4><blockquote>
+<p><code>window.getComputedStyle</code> -&gt; <code>获取当前元素经过浏览器计算过的样式</code>；</p>
+<ul>
+<li>在<code>谷歌</code>中，我们获取的结果是：<code>function getComputedStyle() { [native code] }</code></li>
+<li>在<code>IE6-8</code>中，我们获取的结果是：<code>undefined</code>， -&gt; 因为在这个浏览器中不兼容window.getComputedStyle 方法；</li>
+</ul>
+</blockquote>
+<pre><code>//getCss方法，有些样式属性在不同浏览器中是不兼容的，如：opacity
+function getCss(curEle,attr) {
+    var val=null,reg=null;//val-&gt;私有 reg -&gt; 私有变量
+    if(&quot;getComputedStyle&quot; in window){//兼容
+        val=window.getComputedStyle(curEle,null)[attr];
+    }else{//不兼容IE6-8
+        if(attr===&quot;opacity&quot;){//如果传递进来的结果是opacity，说明我想获取到的是透明度(opacity: 0.1;)，但它在IE6-8中不兼容，因此需要使用滤镜filter来进行处理（先在css中写 filter:alpha(opacity=10);）；
+            val=curEle.currentStyle[&quot;filter&quot;];// -&gt; &quot;alpha(opacity=10)&quot; 要把获取到的结果进行剖析，获取里面的数字，让数字除以100才能和标准的浏览器保持了一致；
+            reg=/^alpha\(opacity=(\d+(?:\.\d+)?)\)$/i;
+            val =reg.test(val)?reg.exec(val)[1]/100:1;
+        }else {
+            val=curEle.currentStyle[attr];
+        }
+    }
+    reg=/^-?\d+(\.\d+)?(px|pt|rem|em)$/i;
+    return reg.test(val)?parseFloat(val):val;
+}
+var res=getCss(box, &quot;opacity&quot;);
+console.log(res);  //0.1
+</code></pre></div><div class="tags"></div><div class="post-nav"><a href="/2017/03/23/2-2-1-类数组转数组/" class="pre">2.2.1 类数组转数组</a><a href="/2017/03/23/2-2-3-JSON及操作/" class="next">2.2.3 JSON及操作</a></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="widget"><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="请输入关键字..."/></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git的应用/">git的应用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/搭建博客/">搭建博客</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/预解释/" style="font-size: 15px;">预解释</a> <a href="/tags/函数/" style="font-size: 15px;">函数</a> <a href="/tags/内存和内存释放/" style="font-size: 15px;">内存和内存释放</a> <a href="/tags/this/" style="font-size: 15px;">this</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-fei"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/2-2-1-类数组转数组/">2.2.1 类数组转数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/null和undefined的区别/">null和undefined的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/2-2-3-JSON及操作/">2.2.3 JSON及操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/2-2-2-DOM及操作/">2.2.2 DOM及操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/20/git的应用/">git的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/预解释、函数、内存、this/">预解释、函数、内存、this</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/用hexo搭建一个博客/">用hexo搭建博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/hello-world/">Hello World</a></li></ul></div></div></div></div><a id="totop" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.2.0" async></script><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |<a href="/atom.xml">订阅本站</a> |<span>联系博主：<a href="mailto:null" target="_blank" class="fa fa-email"> </a><a href="null" target="_blank" class="fa fa-weibo"></a><a href="null" target="_blank" class="fa fa-github"> </a></span></p><p><span> Copyright &copy;<a href="/." rel="nofollow">董金娟</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span><span><a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> Theme </a>by<a rel="nofollow" target="_blank" href="https://github.com/chaooo"> Charles.</a></span></p></div></div></div><script type="text/javascript" src="/js/search.json.js?v=1.2.0"></script></body></html>
