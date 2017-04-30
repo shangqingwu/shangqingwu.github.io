@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="记录了整个技术栈"><title>call/apply/bind | 董金娟的博客|学习前端</title><link rel="stylesheet" type="text/css" href="//fonts.css.network/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2.0"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=1.2.0"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">call/apply/bind</h1><a id="logo" href="/.">董金娟的博客|学习前端</a><p class="description">技术博客</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">call/apply/bind</h1><div class="post-meta">Mar 23, 2017<span> | </span><span class="category"><a href="/categories/JavaScript/">JavaScript</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h3 id="2-1-1-call、apply、bind"><a href="#2-1-1-call、apply、bind" class="headerlink" title="2.1.1 call、apply、bind"></a>2.1.1 call、apply、bind</h3><blockquote>
+<p>定义位置：</p>
+<ul>
+<li>放Function类的原型（<code>Function.prototype</code>）上，对于每个Function这个类的<code>实例</code>来说都是<code>公有方法</code>；<h4 id="call"><a href="#call" class="headerlink" title="call"></a>call</h4></li>
+</ul>
+<ol>
+<li><p>作用：</p>
+</li>
+<li><p>call的第一个参数，用来<code>改变call前面这个实例的this关键字</code>；</p>
+<ul>
+<li>如果<code>不</code>想<code>修改this</code>：</li>
+</ul>
+<ol>
+<li><code>非严格模式</code>下，写成<code>null/undefined/this</code> -&gt; 将call前面的函数中this<code>改为window</code>，<code>当前函数名</code>-&gt; 将call前面的函数中this<code>改为当前函数</code>；</li>
+<li><code>严格模式(&quot;use strict&quot;)</code>下，只能写<code>当前函数名</code>；</li>
+</ol>
+</li>
+<li>从第二个参数开始，给call前面的函数，<code>从左到右一个个的赋值</code>；</li>
+</ol>
+</blockquote>
+<ol>
+<li>call方法执行步骤：</li>
+</ol>
+<blockquote>
+<ol>
+<li>函数类（Function）的<code>实例通过__proto__先找到</code>定义在Function.prototype的<code>call方法</code>；</li>
+<li>call方法把这个函数<code>实例中</code>的<code>this</code>修改成了<code>call方法中的第一个参数</code>；</li>
+<li>函数类（Function）的<code>实例执行</code>；-&gt; <code>this();</code></li>
+</ol>
+</blockquote>
+<ol>
+<li>关于call</li>
+</ol>
+<blockquote>
+<ol>
+<li>call<code>改完this</code>指向，<code>传完参数</code>之后，让<code>call前面的函数立即执行</code>；</li>
+<li>关于实例和Function.prototype.call方法中的this：<ol>
+<li><code>f1中this关键字可有可无</code>；</li>
+<li><code>Function.prototype.call方法中，this必须要有</code>；（因为要执行this();）</li>
+</ol>
+</li>
+<li>当用call这个方法时，先去实例的<code>私有空间</code>找有没有call这个属性，没有的话，再通过<code>__proto__</code>到<code>Function.prototype原型上找</code>：这里面都是<code>公有属性和方法</code>；</li>
+</ol>
+</blockquote>
+<ol>
+<li>多个call其实就是第一个参数执行;<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">function fn1()&#123; console.log(1) &#125;</div><div class="line">function fn2()&#123; console.log(2) &#125;</div><div class="line">fn1.call(fn2);  /* 1 fn1执行*/</div><div class="line">fn1.call.call(fn2); /* 2 多个call其实就是第一个参数执行 -&gt; fn2()*/</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="严格模式和非严格模式"><a href="#严格模式和非严格模式" class="headerlink" title="严格模式和非严格模式"></a>严格模式和非严格模式</h5><ol>
+<li>严格模式：<strong><code>&quot;use strict&quot;;</code></strong></li>
+</ol>
+<ul>
+<li><code>告诉当前浏览器接下来的JS代码模式进行编写</code>；此类声明称作“指令序言”；</li>
+<li>严格模式声明的范围取决于其<code>上下文</code>。<ul>
+<li>如果在<code>全局上下文（函数的范围之外）</code>中声明严格模式，则<code>程序中的所有代码（除了函数内的）都处于严格模式</code>；</li>
+<li>如果在<code>函数中</code>声明严格模式，则<code>函数中的所有代码都处于严格模式</code>。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/*对于JS代码中没有写执行主体的情况下，在严格模式下，没有写就是没有执行主体，this指向的是undefined；*/</div><div class="line"></div><div class="line">&apos;use strict&apos;;</div><div class="line">var obj=&#123;name:&quot;kim&quot;&#125;;</div><div class="line">function fn(num1,num2) &#123;</div><div class="line">    console.log(this);</div><div class="line">&#125;</div><div class="line">fn.call(obj,100,200);//this-&gt;obj（第一个参数改变fn中的this，修改之后this为obj）   300（num1=200，num2=200）</div><div class="line">fn.call();//this-&gt;undefined</div><div class="line">fn.call(null);//this-&gt;null</div><div class="line">fn.call(undefined);//this-&gt;undefined</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>非严格模式：</li>
+</ol>
+<ul>
+<li><code>一般我们执行的环境</code>都是非严格模式<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/*对于JS代码中没有写执行主体的情况下，非严格模式下默认的是window执行的，所以this指向的是window*/</div><div class="line">var obj=&#123;name:&quot;kim&quot;&#125;;</div><div class="line">function fn(num1,num2) &#123;</div><div class="line">   console.log(this);</div><div class="line">&#125;</div><div class="line">fn.call(obj,100,200);//this-&gt;obj（第一个参数改变fn中的this，修改之后this为obj）   300（num1=200，num2=200）</div><div class="line">fn.call();//this-&gt;window</div><div class="line">fn.call(null);//this-&gt;window</div><div class="line">fn.call(undefined);//this-&gt;window</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li>严格模式下的this相对于非严格模式下的<code>this主要区别</code>：</li>
+</ol>
+<ul>
+<li>对于JS代码中没有写执行主体的情况下，<code>非严格模式下</code>默认的是window执行的，所以<code>this指向的是window</code>； 但在<code>严格模式下</code>，没有写就是没有执行主体，<code>this指向的是undefined</code>；</li>
+<li>如果把this修改成<code>null/undefined</code>，在<code>非严格模式</code>下，默认是修改成<code>window</code>；在<code>严格模式</code>下，就是修改成<code>null/undefined</code>；</li>
+</ul>
+<ol>
+<li>严格模式和非严格模式的区别：</li>
+</ol>
+<ul>
+<li>在<code>非严格模式</code>下，一个函数中的<code>arguments和当前函数定义的形参是存在关系</code>的，一个改变另一个也跟着变；</li>
+<li>在<code>严格模式</code>下，是<code>没有关系</code>的，并且<code>禁止使用arguments.callee和arguments.callee.caller</code>；<br><img src="http://p1.bpimg.com/4851/abbdfbc9dc03ac46.png" alt="严格模式和非严格模式的区别"></li>
+</ul>
+<h4 id="apply方法"><a href="#apply方法" class="headerlink" title="apply方法"></a>apply方法</h4><ol>
+<li>作用：<ul>
+<li>1、第一个参数，<code>改变this指向</code>；</li>
+<li>2、第二个参数，虽然是个<code>数组</code>，但是相当于给apply前面的函数，<code>从左到右一个个的赋值</code>；</li>
+</ul>
+</li>
+<li><p>当apply改完this指向，传完参数之后，<code>让apply前面的函数立即执行</code>；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var obj=&#123;&#125;;</div><div class="line">var ary=[2,3];</div><div class="line">function f1(n,m) &#123;</div><div class="line">    console.log(this,(n+m));</div><div class="line">&#125;</div><div class="line">f1.apply(obj,[2,3]);//Object 5</div><div class="line">f1.apply(obj,ary);//Object 5</div></pre></td></tr></table></figure>
+</li>
+<li><p>apply和call方法：</p>
+</li>
+</ol>
+<ul>
+<li>相同点：<ol>
+<li>apply和call方法的作用是一模一样的，都是用来<code>改变方法的this关键字</code>，并且<code>把方法前面的函数执行</code>；</li>
+<li>在<code>严格模式下和非严格模式</code>下对于<code>第一个参数null/undefined这种情况的区别规律</code>也是<code>一模一样</code>的；</li>
+</ol>
+</li>
+<li>区别：<pre><code>- `call`在给fn传递参数的时候，是`一个个的传递值`的；
+- `apply`不是一个个传，而是把要给fn传递的`参数值统一的放在一个数组`中进行操作，但是也相当于从左到右一个个的给fn的形参赋值；
+</code></pre><h4 id="bind方法"><a href="#bind方法" class="headerlink" title="bind方法"></a>bind方法</h4></li>
+<li>这个方法在<strong><code>IE6-8下不兼容</code></strong>；</li>
+</ul>
+<ol>
+<li>作用：<ul>
+<li>1、第一个参数，<code>改变this指向</code>；</li>
+<li>2、第二个参数，给bind前面的函数，<code>从左到右一个个的赋值</code>；</li>
+</ul>
+</li>
+<li><strong><code>预处理机制</code></strong>：<ul>
+<li>先<code>把bind前面的函数中的this改了</code>，<code>参数传了</code>，然后<code>返回一个修改后的新函数</code>；在<code>需要的时候，手动调用</code>（用一个<code>变量接收</code>返回出来的修改后的函数，<code>调用那个变量</code>即可）；</li>
+<li><code>使用bind</code>的时候一般<code>只修改this</code>，<code>返回值执行</code>的时候<code>再自己传参</code>；<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var obj=&#123;&#125;;</div><div class="line">var ary=[2,3];</div><div class="line">function f1(n,m) &#123;</div><div class="line">    console.log(this,(n+m));</div><div class="line">&#125;</div><div class="line">var res=f1.bind(obj,2,3);</div><div class="line">res();    //Object&#123;&#125; 5  -&gt; 手动调用</div><div class="line">f1.bind(obj,2,3)();    //Object&#123;&#125; 5  -&gt; 立即调用</div><div class="line">f1.bind(obj,2,3);  // 什么也没输出  -&gt;因为没有被调用 -&gt;只是改变了f1中的this为obj，并且给f1传递了两个参数值2、3，然后返回一个修改后的函数，并被res接受 -&gt; 但是此时并没有把res（修改后的这个函数）执行；</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="call，apply，bind关系："><a href="#call，apply，bind关系：" class="headerlink" title="call，apply，bind关系："></a>call，apply，bind关系：</h4><ol>
+<li><strong>call和apply</strong></li>
+</ol>
+<ul>
+<li><code>相同</code>：<ol>
+<li>在改完this指向，传完参数之后，让前面的函数<code>立即执行</code>；</li>
+<li>在<code>严格模式下和非严格模式</code>下对于<code>第一个参数null/undefined这种情况的区别规律</code>也是<code>一模一样</code>的；</li>
+</ol>
+</li>
+<li><code>区别</code>：<code>第二个参数不同</code>：<ul>
+<li><code>call</code>：从二个参数开始<code>一个个的写参数</code>；</li>
+<li><code>apply</code>：第二个参数是个<code>数组</code>，但也相当于从左到右一个个的给前面函数的形参赋值；</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><strong>call和bind</strong></li>
+</ol>
+<ul>
+<li><code>相同</code>：<ol>
+<li>第一个参数，<code>改变this指向</code>；</li>
+<li>第二个参数，给他们前面的函数<code>从左到右一个个的赋值</code>；</li>
+</ol>
+</li>
+<li><code>区别：调用方式机制不同</code>；<ul>
+<li><code>call</code>：在改完this指向，传完参数之后，让前面的函数<code>立即执行</code>；</li>
+<li><code>bind</code>：属于<code>预处理机制</code>：先把bind前面的函数中的this改了，参数传了，然后<code>返回一个修改后的函数</code>；在需要的时候，<code>手动调用</code>（用一个<code>变量接收</code>返回出来的修改后的函数，<code>调用那个变量</code>即可）；</li>
+</ul>
+</li>
+</ul>
+</div><div class="tags"><a href="/tags/修改this/">修改this</a></div><div class="post-nav"><a href="/2017/03/23/2-1-2-求数组中最小值和最大值/" class="pre">2.1.2 求数组中最小值和最大值</a><a href="/2017/03/23/面向对象/" class="next">面向对象</a></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="widget"><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="请输入关键字..."/></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git的应用/">git的应用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/搭建博客/">搭建博客</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/预解释/" style="font-size: 15px;">预解释</a> <a href="/tags/函数/" style="font-size: 15px;">函数</a> <a href="/tags/内存和内存释放/" style="font-size: 15px;">内存和内存释放</a> <a href="/tags/this/" style="font-size: 15px;">this</a> <a href="/tags/面向对象/" style="font-size: 15px;">面向对象</a> <a href="/tags/修改this/" style="font-size: 15px;">修改this</a> <a href="/tags/数组中最小值和最大值/" style="font-size: 15px;">数组中最小值和最大值</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-fei"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/2-2-1-类数组转数组/">2.2.1 类数组转数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/null和undefined的区别/">null和undefined的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/2-2-3-JSON及操作/">2.2.3 JSON及操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/2-2-2-DOM及操作/">2.2.2 DOM及操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/2-1-2-求数组中最小值和最大值/">2.1.2 求数组中最小值和最大值</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/2-1-1-call-apply-bind/">call/apply/bind</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/23/面向对象/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/20/git的应用/">git的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/预解释、函数、内存、this/">预解释、函数、内存、this</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/用hexo搭建一个博客/">用hexo搭建博客</a></li></ul></div></div></div></div><a id="totop" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.2.0" async></script><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |<a href="/atom.xml">订阅本站</a> |<span>联系博主：<a href="mailto:null" target="_blank" class="fa fa-email"> </a><a href="null" target="_blank" class="fa fa-weibo"></a><a href="null" target="_blank" class="fa fa-github"> </a></span></p><p><span> Copyright &copy;<a href="/." rel="nofollow">董金娟</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span><span><a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> Theme </a>by<a rel="nofollow" target="_blank" href="https://github.com/chaooo"> Charles.</a></span></p></div></div></div><script type="text/javascript" src="/js/search.json.js?v=1.2.0"></script></body></html>
